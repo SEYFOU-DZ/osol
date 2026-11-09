@@ -1,0 +1,204 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* هوية بصرية: كحلي #101C32 — ذهبي #D8B36A — عاجي #F6F2E9
+       Scheme: clean light slate-gray background + white cards + dark navy sidebar */
+
+    /* Page background — light blue-gray, clearly lighter than cards on mobile */
+    --background: 220 20% 94%;
+    --foreground: 219 45% 12%;
+
+    /* Cards — pure white, clearly distinct from background */
+    --card: 0 0% 100%;
+    --card-foreground: 219 45% 12%;
+
+    /* Popover / Dropdown — white */
+    --popover: 0 0% 100%;
+    --popover-foreground: 219 45% 12%;
+
+    /* Primary action — gold */
+    --primary: 38 56% 55%;
+    --primary-foreground: 219 51% 10%;
+
+    /* Secondary — light slate chip / badge */
+    --secondary: 220 18% 90%;
+    --secondary-foreground: 220 35% 20%;
+
+    /* Muted — slightly darker than background, used for inner sections */
+    --muted: 220 16% 88%;
+    --muted-foreground: 220 15% 42%;
+
+    /* Accent — same as secondary */
+    --accent: 220 18% 88%;
+    --accent-foreground: 220 35% 15%;
+
+    /* Danger */
+    --destructive: 350 72% 44%;
+    --destructive-foreground: 0 0% 100%;
+
+    /* Borders & inputs */
+    --border: 220 18% 86%;
+    --input: 220 20% 97%;
+    --ring: 38 56% 55%;
+    --radius: 0.75rem;
+
+    /* ───── Sidebar ─────
+       Dark navy, visually distinct depth layer */
+    --sidebar-background: 219 51% 13%;
+    --sidebar-foreground: 220 15% 76%;
+    --sidebar-primary: 38 56% 63%;
+    --sidebar-primary-foreground: 219 51% 10%;
+    --sidebar-accent: 219 42% 20%;
+    --sidebar-accent-foreground: 43 40% 92%;
+    --sidebar-border: 219 38% 20%;
+    --sidebar-ring: 38 56% 63%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  html {
+    font-family: "Cairo", "Tajawal", "Segoe UI", Tahoma, sans-serif;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  .num,
+  input[type="number"] {
+    font-family: "Hanken Grotesk", "Cairo", sans-serif;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.01em;
+  }
+}
+
+@layer utilities {
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background: hsl(220 18% 72%);
+    border-radius: 999px;
+  }
+  .scrollbar-thin::-webkit-scrollbar-track {
+    background: hsl(220 20% 90%);
+  }
+}
+
+/* ---------------- الطباعة من المتصفح ---------------- */
+@media print {
+  /* الحفاظ على الألوان في ملفات PDF */
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+  @page {
+    size: A4;
+    margin: 12mm;
+  }
+  body * {
+    visibility: hidden;
+  }
+  .print-area,
+  .print-area * {
+    visibility: visible;
+  }
+  .print-area {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    background: white !important;
+  }
+  .no-print {
+    display: none !important;
+  }
+}
+
+/* ---------------- أنميشن الواجهة التعريفية ---------------- */
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes float-slow {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-12px);
+  }
+}
+@keyframes pulse-dot {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(1.35);
+  }
+}
+@keyframes count-grow {
+  from {
+    transform: scale(0.6);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+@keyframes shimmer-line {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+.anim-fade-up {
+  animation: fade-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.anim-float {
+  animation: float-slow 6s ease-in-out infinite;
+}
+.anim-pulse-dot {
+  animation: pulse-dot 1.8s ease-in-out infinite;
+}
+.anim-count {
+  animation: count-grow 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+.shimmer-text {
+  background: linear-gradient(90deg, #d8b36a 25%, #f3e3bd 50%, #d8b36a 75%);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: shimmer-line 3.5s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .anim-fade-up,
+  .anim-float,
+  .anim-pulse-dot,
+  .anim-count,
+  .shimmer-text {
+    animation: none;
+  }
+  .anim-fade-up {
+    opacity: 1;
+  }
+}
